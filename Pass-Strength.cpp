@@ -67,6 +67,8 @@ std::string checkPasswordStrength(const std::string& password) {
         return "Weak";
     } else if (complexity == 3) {
         return "Moderate";
+    } else if (complexity == 4){
+        return "Normal";
     } else {
         return "Strong";
     }
