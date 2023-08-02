@@ -23,19 +23,19 @@ git clone https://github.com/your-username/password-checker.git
 2. Navigate to the project directory.
 
 ```bash
-cd password-checker
+cd Pass-Strength
 ```
 
 3. Compile the source code.
 
 ```bash
-g++ -o password_checker password_checker.cpp
+g++ Pass-Strength.cpp
 ```
 
 4. Run the password strength checker.
 
 ```bash
-./password_checker
+./a.exe
 ```
 
 ### Usage
