@@ -2,86 +2,36 @@
 #include <string>
 #include <cctype>
 
-// Function to check if the password contains uppercase characters
-bool containsUpperCase(const std::string& password) {
-    for (char c : password) {
-        if (std::isupper(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Function to check if the password contains lowercase characters
-bool containsLowerCase(const std::string& password) {
-    for (char c : password) {
-        if (std::islower(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Function to check if the password contains digits
-bool containsDigit(const std::string& password) {
-    for (char c : password) {
-        if (std::isdigit(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Function to check if the password contains special characters
-bool containsSpecialChars(const std::string& password) {
-    for (char c : password) {
-        if (!std::isalnum(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Function to check the strength of the password
-std::string checkPasswordStrength(const std::string& password) {
+// Function to evaluate password complexity
+int evaluatePassword(const std::string& password) {
     int length = password.length();
-    int complexity = 0;
+    bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
 
-    if (length >= 8) {
-        complexity++;
-    }
-    if (containsUpperCase(password)) {
-        complexity++;
-    }
-    if (containsLowerCase(password)) {
-        complexity++;
-    }
-    if (containsDigit(password)) {
-        complexity++;
-    }
-    if (containsSpecialChars(password)) {
-        complexity++;
+    for (char c : password) {
+        if (std::isupper(c)) hasUpper = true;
+        else if (std::islower(c)) hasLower = true;
+        else if (std::isdigit(c)) hasDigit = true;
+        else hasSpecial = true;
     }
 
-    if (complexity < 3) {
-        return "Weak";
-    } else if (complexity == 3) {
-        return "Moderate";
-    } else if (complexity == 4){
-        return "Normal";
-    } else {
-        return "Strong";
+    return (length >= 8) + hasUpper + hasLower + hasDigit + hasSpecial;
+}
+
+// Function to determine password strength
+std::string checkPasswordStrength(const std::string& password) {
+    switch (evaluatePassword(password)) {
+        case 5: return "Strong";
+        case 4: return "Normal";
+        case 3: return "Moderate";
+        default: return "Weak";
     }
 }
 
 int main() {
     std::string password;
-
     std::cout << "Enter a password: ";
     std::cin >> password;
 
-    std::string strength = checkPasswordStrength(password);
-    std::cout << "Password strength: " << strength << std::endl;
-
+    std::cout << "Password strength: " << checkPasswordStrength(password) << std::endl;
     return 0;
 }
